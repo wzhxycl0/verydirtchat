@@ -21,20 +21,24 @@ export default function Chat() {
     }, [isAtBottom]);
 
     useEffect(() => {
-        socketRef.current = io("localhost:1488");
+        socketRef.current = io();
 
         socketRef.current.on("connect", () =>
             useAuthStore.getState().setId(socketRef.current?.id)
         );
 
         socketRef.current.on("message", (data) => {
-            if (useAuthStore.getState().id === data.senderId) setBlockInput(false);
-            useMessageStore.getState().addMessage({
-                nickname: data.nickname,
-                text: data.text,
-                senderId: data.senderId,
-            });
-            if (!isAtBottomRef.current) setNewMessages((prev) => prev + 1);
+            if (data.text.length < 4096) {
+                if (useAuthStore.getState().id === data.senderId) setBlockInput(false);
+
+                useMessageStore.getState().addMessage({
+                    nickname: data.nickname,
+                    text: data.text,
+                    senderId: data.senderId,
+                });
+                if (!isAtBottomRef.current) setNewMessages((prev) => prev + 1);
+
+            }
         });
     }, []);
 

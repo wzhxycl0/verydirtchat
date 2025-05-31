@@ -30,7 +30,7 @@ export default function ChatBox({
     const handleScroll = () => {
         const box = chatBoxRef.current;
         if (!box) return;
-        setIsAtBottom(box.scrollHeight === box.scrollTop + box.offsetHeight);
+        setIsAtBottom(Math.abs(box.scrollHeight - (box.scrollTop + box.offsetHeight)) <= 10);
     };
 
     return (

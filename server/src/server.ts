@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 import { Server as SocketIOServer } from "socket.io";
 import app from "./app";
 import { chatSocket } from "./sockets/chatSocket";
+import { PORT } from "../config.json";
 
 const server = createServer(app);
 const io: SocketIOServer = new SocketIOServer(server, {
@@ -10,6 +11,4 @@ const io: SocketIOServer = new SocketIOServer(server, {
 
 chatSocket(io);
 
-server.listen(1488, () => {
-    console.log('Server running on port 1488');
-});
+server.listen(PORT);

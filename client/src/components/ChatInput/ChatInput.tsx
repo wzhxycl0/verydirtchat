@@ -9,7 +9,7 @@ import { Socket } from "socket.io-client";
 import * as React from "react";
 
 const validationSchema = zov.object({
-    message: zov.string().nonempty(),
+    message: zov.string().max(100).nonempty(),
 });
 
 interface ChatInputProps {
@@ -30,7 +30,8 @@ export default function ChatInput({
             <Formik
                 initialValues={{ message: "" }}
                 validationSchema={toFormikValidationSchema(validationSchema)}
-                validateOnMount
+                validateOnMount={true}
+                validateOnChange={true}
                 onSubmit={async ({ message }, { resetForm, validateForm }) => {
                     const { nickname, id } = useAuthStore.getState();
                     if (socketRef?.current)

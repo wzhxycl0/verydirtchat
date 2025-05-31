@@ -22,7 +22,7 @@ export async function handleMessage(
     data: ChatMessage,
     io: SocketIOServer
 ): Promise<void> {
-    if (data.nickname && data.text) {
+    if (data.nickname && data.text && data.text.length < 100) {
         data.text = await makeRudeMessage(data.text);
         await prisma.message.create({
             data: {

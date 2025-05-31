@@ -3,6 +3,8 @@ import { Field, Form, Formik } from "formik";
 import { z as zov } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useAuthStore } from "../../stores/auth-store.ts";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import TelegramIcon from '@mui/icons-material/Telegram';
 
 const validationSchema = zov.object({
     nickname: zov.string({ required_error: "Введи ник, чмо" })
@@ -11,8 +13,15 @@ const validationSchema = zov.object({
 
 export default function Auth() {
     return (
-        <Box sx={{ display: "flex", height: "100%", justifyContent: "center", alignItems: "center" }}>
-            <Paper sx={{ p: 6, borderRadius: 3 }}>
+        <Box sx={{
+            display: "flex",
+            height: "100vh",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            position: "relative"
+        }}>
+            <Paper sx={{ padding: '50px', borderRadius: 3 }}>
                 <Formik
                     initialValues={{ nickname: "хуесос" }}
                     validationSchema={toFormikValidationSchema(validationSchema)}
@@ -35,6 +44,32 @@ export default function Auth() {
                         </Form>
                     )}
                 </Formik>
+
+            </Paper>
+            <Paper style={{
+                position: 'absolute',
+                bottom: '25px',
+                display: 'flex',
+                justifyContent: 'center',
+                // width: '75%',
+                gap: '25px',
+                padding: '20px',
+                borderRadius: '40px'
+            }}>
+                <a href='https://t.me/+ysAvqT3Wo6VhYmU6' style={{height: '55px'}} target='_blank'>
+                    <TelegramIcon sx={{
+                        width: '55px',
+                        height: '55px',
+                        color: 'white'
+                    }} />
+                </a>
+                <a href='https://github.com/wzhxycl0/verydirtchat' style={{height: '55px'}} target='_blank' >
+                    <GitHubIcon sx={{
+                        width: '55px',
+                        height: '55px',
+                        color: 'white'
+                    }} />
+                </a>
             </Paper>
         </Box>
     );
